@@ -1,3 +1,27 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "target": "ES6", 
+    "jsx": "react", 
+    "strict": true, 
+    "esModuleInterop": true, 
+    "skipLibCheck": true, 
+    "resolveJsonModule": true, 
+    "noEmit": true, 
+    "outDir": "./dist", 
+    "types": ["react", "react-dom"], 
+    "allowSyntheticDefaultImports": true, 
+    "customConditions": ["react-native"] 
+  },
+  "include": [
+    "src/**/*",
+    "src/**/*.ts", 
+    "src/**/*.tsx" 
+  ],
+  "exclude": [
+    "node_modules", 
+    "dist" 
+  ]
 }

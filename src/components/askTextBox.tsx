@@ -9,14 +9,18 @@ interface TextBoxProps {
   onEndEditing?: () => void; // Optional event triggered when editing ends
 }
 
-const TextBox: React.FC<TextBoxProps> = (props) => {
+// TextBox component
+const TextBox: React.FC<TextBoxProps> = ({ placeholder, value, onChangeText, onEndEditing }) => {
   return (
     <TextInput
-      style={styles.input}
-      placeholder={props.placeholder} // Use props instead of destructuring
-      value={props.value} // `value` should be of type `string`
-      onChangeText={props.onChangeText} // `onChangeText` expects a `string`
-      onEndEditing={props.onEndEditing} // Optional handler
+      style={{
+        ...styles.input,
+        color: 'white', // Set the font color to white
+      }}
+      placeholder={placeholder} // Use props instead of destructuring
+      value={value} // `value` should be of type `string`
+      onChangeText={onChangeText} // `onChangeText` expects a `string`
+      onEndEditing={onEndEditing} // Optional handler
       multiline
       textAlignVertical="top"
     />
@@ -33,8 +37,10 @@ const styles = StyleSheet.create({
     margin: 10,
     width: '90%',
     height: 150,
+    color: 'black', // Default font color
   },
 });
+
 
 // Props for AskBox component
 interface AskBoxProps {
@@ -43,6 +49,7 @@ interface AskBoxProps {
   sendMealDescription: (value: string) => void; // Function to handle sending the final description
 }
 
+// AskBox component
 const AskBox: React.FC<AskBoxProps> = ({
   placeholder = '',
   onChangeText,

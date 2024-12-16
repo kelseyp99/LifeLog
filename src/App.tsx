@@ -1,51 +1,48 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
   StatusBar,
+  ScrollView,
   StyleSheet,
   Text,
   useColorScheme,
   View,
+  SafeAreaView,
+  Button, // Import SafeAreaView from react-native
 } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import AskBox from './components/askTextBox.tsx';
+import RealmDb from './components/RealmDb.tsx';
 
-import { Colors, LearnMoreLinks } from 'react-native/Libraries/NewAppScreen';
-import AskBox from './components/askTextBox'; // Import the AskBox component
-
+// Define types for Section component props
 type SectionProps = {
   title: string;
   children: React.ReactNode;
 };
 
-function Section({ children, title }: SectionProps): React.JSX.Element {
+
+
+
+// Section component that displays title and children
+const Section: React.FC<SectionProps> = ({ title, children }) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
       <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}
+        style={[styles.sectionTitle, { color: isDarkMode ? Colors.white : Colors.black }]}
       >
         {title}
       </Text>
       <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}
+        style={[styles.sectionDescription, { color: isDarkMode ? Colors.light : Colors.dark }]}
       >
         {children}
       </Text>
     </View>
   );
-}
+};
 
-function App(): React.JSX.Element {
+// Main App component with state and logic for handling input
+const App: React.FC = () => {
   const [inputValue, setInputValue] = useState(''); // State for input value
   const [finalValue, setFinalValue] = useState(''); // State for the final submitted value
 
@@ -54,6 +51,7 @@ function App(): React.JSX.Element {
     setInputValue(text);
   };
 
+  
   // Handle final text submission
   const sendMealDescription = (text: string) => {
     console.log('Final Input Submitted:', text);
@@ -72,16 +70,9 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}
-      >
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}
-        >
-          <Section title="Ask Janet!" children={undefined}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
+        <View style={{ backgroundColor: isDarkMode ? Colors.black : Colors.white }}>
+          <Section title="Ask Janet!">
             Ask or tell me something, like what you last ate.
             <AskBox
               placeholder="Enter your text here"
@@ -93,16 +84,15 @@ function App(): React.JSX.Element {
               Final Submission: {finalValue || 'Not Submitted Yet'}
             </Text>
           </Section>
-          <Section title="Learn More" children={undefined}>
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
+      <Text>Welcome to Realm Example</Text>
+      <RealmDb /> {/* Render the RealmDb component */}
     </SafeAreaView>
   );
-}
+};
 
+// Styles for components
 const styles = StyleSheet.create({
   sectionContainer: {
     marginTop: 32,

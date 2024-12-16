@@ -1,1 +1,3 @@
-declare module 'react';
+declare module 'react' {
+    export = React;
+  }
