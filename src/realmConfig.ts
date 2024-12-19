@@ -1,11 +1,46 @@
-const LogEntrySchema = {
-    name: 'LogEntry',
-    properties: {
-      id: 'int', // Primary Key, unique identifier for each entry
-      category: 'string', // Category (Nutrition, Physical Health, etc.)
-      description: 'string', // User-provided description
-      timestamp: 'date', // When the entry was created
-    },
-    primaryKey: 'id', // Set the primary key to 'id'
-  };
-  
+// frontend/src/RealmConfig.ts
+
+import { Configuration } from 'Realm';
+
+const ActivityLogSchema = {
+  name: 'ActivityLog',
+  properties: {
+    id: 'int',
+    discussionId: 'int', // Add this line
+    category: 'string',
+    description: 'string',
+    timestamp: 'date',
+  },
+  primaryKey: 'id',
+};
+
+const DiscussionSchema = {
+  name: 'Discussion',
+  properties: {
+    id: 'int',
+    timestamp: 'date',
+    description: 'string',
+    cleared: 'bool',
+    activityLogs: 'ActivityLog[]', 
+  },
+  primaryKey: 'id'
+};
+
+const ParametersSchema = {
+  name: 'parameters',
+  properties: {
+    paramName: 'string',
+    paramValue: 'string?',
+  },
+  primaryKey: 'paramName',
+};
+
+const config: Configuration = {
+  path: '/data/data/com.lifelog/databases/ActivityLog.realm',
+  schema: [ActivityLogSchema, DiscussionSchema, ParametersSchema],
+  schemaVersion: 1, // Increment when schema changes
+};
+
+const realm = new Realm(config);
+
+export { realm, ActivityLogSchema, DiscussionSchema, ParametersSchema };

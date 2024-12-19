@@ -76,3 +76,6 @@ yarn-error.log
 # Ignore .env files
 .env
 
+
+# Ignore Gradle build output directory
+build

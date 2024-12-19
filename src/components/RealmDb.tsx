@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Text } from 'react-native';
 import * as fs from 'fs';
-
+// @ts-ignore
+import Realm from '../../react-native-realm/index';
 // Define the schema for the Realm database
 const LogEntrySchema = {
   name: 'LogEntry',
@@ -13,6 +14,8 @@ const LogEntrySchema = {
   },
   primaryKey: 'id', // Set 'id' as the primary key
 };
+
+const realm: any = new Realm({ schema: [LogEntrySchema] });
 
 const exportDatabase = async () => {
   try {
@@ -29,12 +32,17 @@ const handleExportDatabase = async () => {
   };
 
 
+  const realmInstance = new Realm({
+    schema: [LogEntrySchema],
+  });
+  
+
   const RealmDb = () => {
     // Create the Realm DB and populate with data when the button is pressed
     const createAndPopulateRealmDb = async () => {
       try {
         // Open the Realm database with the defined schema
-        const realmInstance = await RealmDb.open({
+        await realmInstance.open({
           schema: [LogEntrySchema],
         });
   
@@ -69,11 +77,10 @@ const handleExportDatabase = async () => {
   return (
     <React.Fragment>
       <Button
-        title="Create and Populate Realm DB"
+        title="Create/Populate DB"
         onPress={createAndPopulateRealmDb}
       />
-      <Text>Press the button to create and populate the Realm DB.</Text>
-      <Button title="Export Database" onPress={handleExportDatabase} />
+      <Button title="Export DB" onPress={handleExportDatabase} />
     </React.Fragment>
   );
 };

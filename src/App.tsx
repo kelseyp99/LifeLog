@@ -11,16 +11,17 @@ import {
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AskBox from './components/askTextBox.tsx';
-import RealmDb from './components/RealmDb.tsx';
+import { addDiscussion } from './services/databaseService';
+import DiscussionTable from './components/DiscussionTable';
+import SwipeableComponent from './components/SwipeableTable.tsx';
+import HelloWorld from './components/HelloWorld.tsx';
+
 
 // Define types for Section component props
 type SectionProps = {
   title: string;
   children: React.ReactNode;
 };
-
-
-
 
 // Section component that displays title and children
 const Section: React.FC<SectionProps> = ({ title, children }) => {
@@ -51,12 +52,23 @@ const App: React.FC = () => {
     setInputValue(text);
   };
 
-  
+/*************  ✨ Codeium Command 🌟  *************/
   // Handle final text submission
+  /**
+   * Called when the user submits their input.
+   * Saves the final value in state and sends it to the database.
+   *
+   * @param text The final input value submitted by the user.
+   */
   const sendMealDescription = (text: string) => {
-    console.log('Final Input Submitted:', text);
+    //console.log('Final Input Submitted:', text);
     setFinalValue(text); // Save the submitted value
+//    console.log('calling addDiscussion:', text);
+    addDiscussion(text); // Send it to the database
+  //  console.log('after calling addDiscussion:', text);
   };
+/******  ca602c76-de8b-4722-a302-547cba02b90c  *******/
+
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -70,14 +82,15 @@ const App: React.FC = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
+      
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
         <View style={{ backgroundColor: isDarkMode ? Colors.black : Colors.white }}>
-          <Section title="Ask Janet!">
+         
+          <Section title="Ask Janet!!!">
             Ask or tell me something, like what you last ate.
             <AskBox
               placeholder="Enter your text here"
               onChangeText={handleTextChange}
-              sendMealDescription={sendMealDescription}
             />
             <Text style={styles.inputPreview}>Live Input: {inputValue}</Text>
             <Text style={styles.finalText}>
@@ -85,12 +98,17 @@ const App: React.FC = () => {
             </Text>
           </Section>
         </View>
+        <DiscussionTable /> 
       </ScrollView>
-      <Text>Welcome to Realm Example</Text>
-      <RealmDb /> {/* Render the RealmDb component */}
+      {/* <HelloWorld />  */}
+     
+      {/* <SwipeableComponent />  */}
+     
     </SafeAreaView>
   );
 };
+
+
 
 // Styles for components
 const styles = StyleSheet.create({
